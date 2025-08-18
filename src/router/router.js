@@ -6,15 +6,15 @@ import Chat from "../views/Chat.vue";
 import Profile from "../views/Profile.vue";
 import Community from "../views/Community.vue";
 
-const routes =[
-  { path: '/', redirect: '/login' },
-  { path: '/login', component: Login },
+const routes = [
+  { path: '/', component: Login },   
   { path: '/signup', component: SignUp },
   { path: '/home', component: Home },
-  { path: '/chat', component : Chat},
-  { path: '/community', component : Community},
-  { path: '/profile', component : Profile}
+  { path: '/chat', component: Chat },
+  { path: '/community', component: Community },
+  { path: '/profile', component: Profile },
 ];
+
 
 const router = createRouter({
     history : createWebHistory(),
