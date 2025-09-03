@@ -1,11 +1,13 @@
 <script setup>
 // 불필요한 import는 지워도 됩니다.
 // import HelloWorld from "./components/HelloWorld.vue";
+
+import NavBar from "./components/NavBar.vue";
 </script>
 
 <template>
   <div>
-    <!-- 라우터의 현재 컴포넌트가 표시될 자리 -->
+    <NavBar />
     <router-view />
   </div>
 </template>

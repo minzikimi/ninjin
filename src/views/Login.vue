@@ -1,5 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center bg-white">
+    <h1>Hyper Hunter</h1>
     <h1 class="text-xl font-bold mb-8 text-gray-800 tracking-tight">Login</h1>
     <form class="w-full max-w-xs">
       <div class="mb-4">
