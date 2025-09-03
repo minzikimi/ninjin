@@ -1,18 +1,23 @@
 <template>
-  <nav>
-    <h1>{{ title }}</h1>
+  <nav
+    class="flex justify-between items-center px-4 h-16 border-2 border-black"
+  >
     <router-link
       v-if="
         currentPath === '/' ||
         currentPath === '/signup' ||
         currentPath === '/home'
       "
-      to="/job-list"
+      to="/itemlisting"
       class="btn-close"
     >
       <Icon icon="material-symbols:close" width="24" height="24" />
     </router-link>
-    <div class="right-icons flex items-center gap-x-4">
+    <h1>{{ title }}</h1>
+    <div
+      class="right-icons flex items-center gap-x-4"
+      v-if="currentPath === '/itemlisting'"
+    >
       <router-link>
         <Icon icon="teenyicons:user-circle-solid" width="24" height="24" />
       </router-link>
@@ -36,7 +41,7 @@ watch(route, (newRoute) => {
   const currentPath = newRoute.path;
   console.log(currentPath);
 
-  if (currentPath === "/") {
+  if (currentPath === "/login") {
     title.value = "Login";
   } else if (currentPath === "/signup") {
     title.value = "Sign up";

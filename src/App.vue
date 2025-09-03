@@ -1,12 +1,9 @@
 <script setup>
-// 불필요한 import는 지워도 됩니다.
-// import HelloWorld from "./components/HelloWorld.vue";
-
 import NavBar from "./components/NavBar.vue";
 </script>
 
 <template>
-  <div>
+  <div class="max-w-xs mx-auto w-full min-h-screen box-border">
     <NavBar />
     <router-view />
   </div>
