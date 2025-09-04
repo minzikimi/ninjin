@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="flex justify-between items-center px-4 h-16 border-2 border-black"
-  >
+  <nav class="flex justify-between items-center px-4 h-16">
     <router-link
       v-if="
         currentPath === '/' ||
