@@ -4,7 +4,7 @@
 
     <section class="flex items-center gap-4 mb-6">
       <div
-        class="w-20 h-20 bg-gray-300 rounded-full overflow-hidden flex items-center justify-center text-gray-500 select-none"
+        class="w-20 h-20 bg-orange-400 rounded-full overflow-hidden flex items-center justify-center text-white-500 select-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,7 +38,7 @@
       <button class="logout" @click="handleLogout">로그아웃</button>
     </section>
 
-    <details class="bg-gray-50 rounded-md p-4 mb-6">
+    <details class="bg-orange-50 p-4 mb-6">
       <summary class="cursor-pointer font-semibold text-gray-900">
         My Favorite Items
       </summary>
@@ -59,7 +59,7 @@
       </div>
     </details>
 
-    <details class="bg-gray-50 rounded-md p-4">
+    <details class="bg-orange-50 -md p-4">
       <summary class="cursor-pointer font-semibold text-gray-900">
         My Posted Items
       </summary>
