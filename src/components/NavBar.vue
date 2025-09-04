@@ -2,55 +2,72 @@
   <nav class="flex justify-between items-center px-4 h-16">
     <router-link
       v-if="
-        currentPath === '/' ||
         currentPath === '/signup' ||
-        currentPath === '/home'
+        currentPath === '/login' ||
+        currentPath === '/item-post' ||
+        currentPath === '/item-post-update'
       "
-      to="/itemlisting"
-      class="btn-close"
+      to="/item-listing"
     >
       <Icon icon="material-symbols:close" width="24" height="24" />
     </router-link>
     <h1>{{ title }}</h1>
     <div
       class="right-icons flex items-center gap-x-4"
-      v-if="currentPath === '/itemlisting'"
+      v-if="currentPath === '/item-listing'"
     >
-      <router-link>
+      <router-link to="/profile">
         <Icon icon="teenyicons:user-circle-solid" width="24" height="24" />
       </router-link>
-      <router-link>
+      <router-link to="/item-post">
         <Icon icon="mdi:pencil-outline" width="24" height="24" />
       </router-link>
     </div>
+
+    <router-link
+      v-if="
+        currentPath.startsWith('/item-detail') || currentPath === '/profile'
+      "
+      to="/item-listing"
+    >
+      <Icon icon="ic:baseline-arrow-back" width="24" height="24" />
+    </router-link>
   </nav>
 </template>
 
 <script setup>
 import { Icon } from "@iconify/vue";
 import { useRoute } from "vue-router";
-import { ref, watch } from "vue";
+import { ref, watch, computed } from "vue";
 
-let route = useRoute();
-let currentPath = route.path;
+const route = useRoute();
+
+const currentPath = computed(() => route.path);
 
 const title = ref("");
-watch(route, (newRoute) => {
-  const currentPath = newRoute.path;
-  console.log(currentPath);
 
-  if (currentPath === "/login") {
+// watch는 currentPath를 감시하도록 함
+watch(currentPath, (path) => {
+  if (path === "/login") {
     title.value = "Login";
-  } else if (currentPath === "/signup") {
+  } else if (path === "/signup") {
     title.value = "Sign up";
-  } else if (currentPath === "/home") {
+  } else if (path === "/home") {
     title.value = "Home";
-  } else if (currentPath === "/chat") {
+  } else if (path === "/chat") {
     title.value = "Chat";
-  } else if (currentPath === "/community") {
+  } else if (path === "/community") {
     title.value = "Community";
-  } else if (currentPath === "/profile") {
+  } else if (path === "/profile") {
     title.value = "Profile";
+  } else if (path === "/item-post") {
+    title.value = "Post your item";
+  } else if (path === "/item-post-update") {
+    title.value = "Update your item";
+  } else if (path === "/item-detail") {
+    title.value = "Item Detail";
+  } else if (path === "/item-listing") {
+    title.value = "Item Listing";
   } else {
     title.value = "";
   }

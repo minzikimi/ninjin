@@ -6,7 +6,6 @@
       @submit.prevent="handleSubmit"
       class="space-y-6 bg-white p-6 border border-gray-400 rounded-none w-full"
     >
-      <!-- Photo Upload UI -->
       <label
         for="photo"
         class="border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer bg-center bg-cover mb-2"
@@ -52,7 +51,6 @@
           class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
         />
       </div>
-      <!-- Price -->
       <div class="flex flex-col">
         <label for="price" class="mb-2 font-semibold text-gray-700"
           >Price</label
@@ -66,7 +64,6 @@
           class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
         />
       </div>
-      <!-- Description -->
       <div class="flex flex-col">
         <label for="description" class="mb-2 font-semibold text-gray-700"
           >Description</label
@@ -80,7 +77,6 @@
           class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50 resize-y"
         />
       </div>
-      <!-- Location -->
       <div class="flex flex-col">
         <label for="location" class="mb-2 font-semibold text-gray-700"
           >Location</label
@@ -94,7 +90,6 @@
           class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
         />
       </div>
-      <!-- Phone Number -->
       <div class="flex flex-col">
         <label for="phone" class="mb-2 font-semibold text-gray-700"
           >Phone Number</label

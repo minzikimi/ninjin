@@ -8,18 +8,19 @@ import Community from "../views/Community.vue";
 import ItemPost from "../views/ItemPost.vue";
 import ItemPostUpdate from "../views/ItemPostUpdate.vue";
 import Home from "../views/Home.vue";
+import ItemDetail from "../views/ItemDetail.vue";
 
 const routes = [
   { path: '/', component: Home }, 
    { path: '/login', component: Login },    
   { path: '/signup', component: SignUp },
-  { path: '/itemlisting', component: ItemListing },
+  { path: '/item-listing', component: ItemListing },
   { path: '/chat', component: Chat },
   { path: '/community', component: Community },
   { path: '/profile', component: Profile },
-  { path: '/itempost', component: ItemPost },
-  { path: '/item_post_update', component: ItemPostUpdate },
-
+  { path: '/item-post', component: ItemPost },
+  { path: '/item-post-update', component: ItemPostUpdate },
+  { path: '/item-detail', component: ItemDetail },
     
 ];
 

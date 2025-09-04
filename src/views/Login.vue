@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center bg-white">
     <form class="w-full max-w-xs">
-      <h1 class="text-6xl font-extrabold mb-10">Loginログイン</h1>
+      <h1 class="text-6xl font-extrabold mb-10">Login</h1>
       <div class="mb-4">
         <label
           for="email"
