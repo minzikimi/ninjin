@@ -3,6 +3,12 @@
     class="min-h-screen flex flex-col justify-center items-center bg-white px-4"
   >
     <!-- bg-circles -->
+    <div
+      class="absolute w-48 h-48 bg-orange-400 rounded-full opacity-30 animate-moveCircle1"
+    ></div>
+    <div
+      class="absolute w-36 h-36 bg-orange-500 rounded-full opacity-20 animate-moveCircle2"
+    ></div>
 
     <h1 class="text-6xl font-extrabold mb-10">MoNoモノ</h1>
 
@@ -21,3 +27,35 @@
 </template>
 
 <script setup></script>
+
+<style scoped>
+@keyframes moveCircle1 {
+  0%,
+  100% {
+    transform: translateX(-30%);
+  }
+  50% {
+    transform: translateX(30%);
+  }
+}
+
+@keyframes moveCircle2 {
+  0%,
+  100% {
+    transform: translateX(20%);
+  }
+  50% {
+    transform: translateX(-20%);
+  }
+}
+
+.animate-moveCircle1 {
+  animation: moveCircle1 6s ease-in-out infinite;
+  top: 20%;
+}
+
+.animate-moveCircle2 {
+  animation: moveCircle2 8s ease-in-out infinite;
+  top: 20%;
+}
+</style>
