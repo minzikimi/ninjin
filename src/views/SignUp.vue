@@ -40,14 +40,6 @@
         class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
       />
 
-      <input
-        type="text"
-        v-model="addr"
-        placeholder="Enter your address"
-        required
-        class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
-      />
-
       <textarea
         v-model="text"
         placeholder="Self introduction"
@@ -76,6 +68,7 @@
 
 <script setup>
 import { ref } from "vue";
+import supabase from "../supabase";
 
 const email = ref("");
 const password = ref("");
@@ -84,5 +77,17 @@ const name = ref("");
 const addr = ref("");
 const text = ref("");
 
-function handleSignup() {}
+const handleSignup = async () => {
+  const { data, error } = await supabase.auth.signUp({
+    email: email.value,
+    password: password.value,
+  });
+
+  if (error) {
+    alert(error.message);
+  } else {
+    console.log("sign up sucessful");
+    console.log(data);
+  }
+};
 </script>
