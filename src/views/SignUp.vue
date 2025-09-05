@@ -1,4 +1,5 @@
 <template>
+  <Spinner :visible="isLoading" />
   <div
     class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-white"
   >
@@ -76,6 +77,10 @@
 <script setup>
 import { ref } from "vue";
 import supabase from "../supabase";
+import Spinner from "../components/Spinner.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
 
 const email = ref("");
 const password = ref("");
@@ -84,7 +89,11 @@ const name = ref("");
 const text = ref("");
 const location = ref("");
 
+const isLoading = ref(false);
+
 const handleSignup = async () => {
+  isLoading.value = true;
+
   const { data, error } = await supabase.auth.signUp({
     email: email.value,
     password: password.value,
@@ -93,20 +102,21 @@ const handleSignup = async () => {
   if (error) {
     alert(error.message);
   } else {
-    console.log("sign up sucessful");
+    // console.log("sign up sucessful");
     console.log(data);
 
-    const { error } = await supabase
-      .from("user_table")
-      .insert({
-        tel: tel.value,
-        text: text.value,
-        name: name.value,
-        location: location.value,
-      });
+    const { error } = await supabase.from("user_table").insert({
+      tel: tel.value,
+      text: text.value,
+      name: name.value,
+      location: location.value,
+    });
     if (error) {
       alert("error");
       console.log(error);
+    } else {
+      isLoading.value = false;
+      router.push("/login");
     }
   }
 };

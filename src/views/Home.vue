@@ -2,6 +2,8 @@
   <div
     class="min-h-screen flex flex-col justify-center items-center bg-white px-4"
   >
+    <!-- bg-circles -->
+
     <h1 class="text-6xl font-extrabold mb-10">MoNoモノ</h1>
 
     <router-link
