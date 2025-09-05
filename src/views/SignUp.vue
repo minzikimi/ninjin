@@ -39,6 +39,13 @@
         required
         class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
       />
+      <input
+        type="text"
+        v-model="location"
+        placeholder="Enter your location"
+        required
+        class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+      />
 
       <textarea
         v-model="text"
@@ -74,8 +81,8 @@ const email = ref("");
 const password = ref("");
 const tel = ref("");
 const name = ref("");
-const addr = ref("");
 const text = ref("");
+const location = ref("");
 
 const handleSignup = async () => {
   const { data, error } = await supabase.auth.signUp({
@@ -88,6 +95,19 @@ const handleSignup = async () => {
   } else {
     console.log("sign up sucessful");
     console.log(data);
+
+    const { error } = await supabase
+      .from("user_table")
+      .insert({
+        tel: tel.value,
+        text: text.value,
+        name: name.value,
+        location: location.value,
+      });
+    if (error) {
+      alert("error");
+      console.log(error);
+    }
   }
 };
 </script>
