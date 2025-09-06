@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen flex flex-col justify-center items-center bg-white">
-    <form class="w-full max-w-xs">
+    <form class="w-full max-w-xs" @submit.prevent="handleLogin">
       <h1 class="text-6xl font-extrabold mb-10">Login</h1>
       <div class="mb-4">
         <label
@@ -42,6 +42,32 @@
   </div>
 </template>
 
-<script></script>
+<script setup>
+import { useRouter } from "vue-router";
+import supabase from "../supabase";
+import { ref } from "vue";
+
+const email = ref("");
+const password = ref("");
+
+const router = useRouter();
+const isLoading = ref(false);
+
+const handleLogin = async () => {
+  console.log(email.value, password.value);
+  isLoading.value = true;
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: email.value,
+    password: password.value,
+  });
+  if (error) {
+    alert(error.message);
+  } else {
+    alert(" login successful");
+    console.log(data);
+    router.push("/item-listing");
+  }
+};
+</script>
 
 <style></style>

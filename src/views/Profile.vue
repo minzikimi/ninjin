@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-md mx-auto p-6 space-y-8">
+  <div class="max-w-md mx-auto p-6 space-y-8" v-if="isLogin">
     <h1 class="text-3xl font-bold mb-6 border-b pb-2">Profile</h1>
 
     <section class="flex items-center gap-4 mb-6">
@@ -35,7 +35,7 @@
     </section>
 
     <section>
-      <button class="logout" @click="handleLogout">로그아웃</button>
+      <button class="text-orange-400" @click="handleLogout">Logout</button>
     </section>
 
     <details class="bg-orange-50 p-4 mb-6">
@@ -53,9 +53,7 @@
             new Date(item.saved_at).toLocaleDateString()
           }}</time>
         </div>
-        <p v-if="favoriteItems.length === 0" class="text-gray-400">
-          No favorite items found.
-        </p>
+        <p class="text-gray-400">No favorite items found.</p>
       </div>
     </details>
 
@@ -74,9 +72,7 @@
             new Date(item.posted_at).toLocaleDateString()
           }}</time>
         </div>
-        <p v-if="postedItems.length === 0" class="text-gray-400">
-          No posted items found.
-        </p>
+        <p class="text-gray-400">No posted items found.</p>
       </div>
     </details>
   </div>
@@ -84,16 +80,51 @@
 
 <script setup>
 import { ref } from "vue";
+import supabase from "../supabase";
+import { onMounted } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+const isLogin = ref(false);
+
+const handleLogout = async () => {
+  const { error } = await supabase.auth.signOut();
+  if (error) {
+    alert("logout failed");
+  } else {
+    alert("logout success");
+    router.push("/");
+  }
+};
+
+onMounted(async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  if (user) {
+    console.log(user.email);
+  }
+
+  if (user) {
+    console.log(" you are login now");
+    isLogin.value = true;
+  } else {
+    console.log("you are log out");
+    isLogin.value = false;
+    alert("Please log in");
+    router.push("/");
+  }
+});
 
 const name = ref("Name");
 const phone = ref("010-1234-5678");
 const intro = ref("Hi, i am front end dev student in hyPER iSLAND");
-const favoriteItems = ref([
-  { id: 1, title: "Vintage Chair", saved_at: "2025-09-01" },
-  { id: 2, title: "Book", saved_at: "2025-08-15" },
-]);
-const postedItems = ref([
-  { id: 1, title: "Office Desk", posted_at: "2025-07-10" },
-  { id: 2, title: "Dining Table", posted_at: "2025-06-25" },
-]);
+// const favoriteItems = ref([
+//   { id: 1, title: "Vintage Chair", saved_at: "2025-09-01" },
+//   { id: 2, title: "Book", saved_at: "2025-08-15" },
+// ]);
+// const postedItems = ref([
+//   { id: 1, title: "Office Desk", posted_at: "2025-07-10" },
+//   { id: 2, title: "Dining Table", posted_at: "2025-06-25" },
+// ]);
 </script>
