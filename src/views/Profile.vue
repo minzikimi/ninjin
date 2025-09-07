@@ -23,14 +23,15 @@
       </div>
       <div>
         <h2 class="text-xl font-semibold text-gray-800">{{ name }}</h2>
-        <p class="text-gray-600 mt-1">{{ phone }}</p>
+        <p class="text-gray-600 mt-1">{{ tel }}</p>
+        <p class="text-gray-600 mt-1">{{ location }}</p>
       </div>
     </section>
 
     <section class="mb-8">
       <h3 class="text-lg font-semibold mb-2">About Me</h3>
       <p class="text-gray-700 leading-relaxed whitespace-pre-wrap">
-        {{ intro }}
+        {{ text }}
       </p>
     </section>
 
@@ -87,6 +88,11 @@ import { useRouter } from "vue-router";
 const router = useRouter();
 const isLogin = ref(false);
 
+const name = ref("");
+const tel = ref("");
+const text = ref("");
+const location = ref("");
+
 const handleLogout = async () => {
   const { error } = await supabase.auth.signOut();
   if (error) {
@@ -97,17 +103,31 @@ const handleLogout = async () => {
   }
 };
 
+//check log in status upon mounting
 onMounted(async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (user) {
-    console.log(user.email);
-  }
+
+  console.log(user?.email);
 
   if (user) {
     console.log(" you are login now");
     isLogin.value = true;
+
+    const { data: userData, error: userError } = await supabase
+      .from("user_table")
+      .select()
+      .eq("id", user.id);
+
+    if (userData && !userError) {
+      console.log("user data:", userData);
+
+      name.value = userData[0].name;
+      tel.value = userData[0].tel;
+      location.value = userData[0].location;
+      text.value = userData[0].text;
+    }
   } else {
     console.log("you are log out");
     isLogin.value = false;
@@ -115,16 +135,4 @@ onMounted(async () => {
     router.push("/");
   }
 });
-
-const name = ref("Name");
-const phone = ref("010-1234-5678");
-const intro = ref("Hi, i am front end dev student in hyPER iSLAND");
-// const favoriteItems = ref([
-//   { id: 1, title: "Vintage Chair", saved_at: "2025-09-01" },
-//   { id: 2, title: "Book", saved_at: "2025-08-15" },
-// ]);
-// const postedItems = ref([
-//   { id: 1, title: "Office Desk", posted_at: "2025-07-10" },
-//   { id: 2, title: "Dining Table", posted_at: "2025-06-25" },
-// ]);
 </script>

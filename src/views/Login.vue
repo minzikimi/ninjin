@@ -1,4 +1,5 @@
 <template>
+  <Spinner :visible="isLoading" />
   <div class="min-h-screen flex flex-col justify-center items-center bg-white">
     <form class="w-full max-w-xs" @submit.prevent="handleLogin">
       <h1 class="text-6xl font-extrabold mb-10">Login</h1>
@@ -46,6 +47,7 @@
 import { useRouter } from "vue-router";
 import supabase from "../supabase";
 import { ref } from "vue";
+import Spinner from "../components/Spinner.vue";
 
 const email = ref("");
 const password = ref("");
