@@ -1,5 +1,8 @@
 <template>
-  <Spinner :visible="isLoading" />
+  <Spinner
+    :visible="isLoading"
+    text="Just a moment, we're creating your account..."
+  />
   <div
     class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-white"
   >

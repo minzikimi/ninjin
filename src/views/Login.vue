@@ -1,5 +1,5 @@
 <template>
-  <Spinner :visible="isLoading" />
+  <Spinner :visible="isLoading" text="just a moment..." />
   <div class="min-h-screen flex flex-col justify-center items-center bg-white">
     <form class="w-full max-w-xs" @submit.prevent="handleLogin">
       <h1 class="text-6xl font-extrabold mb-10">Login</h1>

@@ -1,4 +1,6 @@
 <template>
+  <Spinner :visible="isLoading" text="Just a moment, we're posting..." />
+
   <div
     class="max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4"
   >
@@ -92,15 +94,15 @@
         />
       </div>
       <div class="flex flex-col">
-        <label for="phone" class="mb-2 font-semibold text-gray-700"
-          >Phone Number</label
+        <label for="tel" class="mb-2 font-semibold text-gray-700"
+          >tel Number</label
         >
         <input
-          id="phone"
+          id="tel"
           type="tel"
-          v-model="phone"
+          v-model="tel"
           required
-          placeholder="Phone number"
+          placeholder="tel number"
           class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
         />
       </div>
@@ -118,15 +120,21 @@
 import { ref } from "vue";
 import { useAuth } from "../composables/useAuth";
 import { onMounted } from "vue";
+import supabase from "../supabase";
+import Spinner from "../components/Spinner.vue";
+import { useRouter } from "vue-router";
 
 const title = ref("");
 const price = ref("");
 const description = ref("");
 const location = ref("");
-const phone = ref("");
+const tel = ref("");
 const previewImage = ref("");
 
 const { isLogin, user, updateUserState } = useAuth();
+
+const isLoading = ref(false);
+const router = useRouter();
 
 onMounted(async () => {
   await updateUserState();
@@ -140,5 +148,24 @@ const onFileChange = (event) => {
   }
 };
 
-const handleSubmit = () => {};
+const handleSubmit = async () => {
+  isLoading.value = true;
+  const { error } = await supabase.from("item_posts").insert({
+    title: title.value,
+    price: price.value,
+    description: description.value,
+    location: location.value,
+    tel: tel.value,
+    // user_id: user.value.id,
+    img_url: "https://placehold.co/64x64",
+  });
+  if (error) {
+    console.log(error);
+    alert(error);
+  } else {
+    alert("posted!!");
+    router.push("/item-listing");
+  }
+  isLoading.value = false;
+};
 </script>
