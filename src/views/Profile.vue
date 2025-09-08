@@ -80,13 +80,15 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import supabase from "../supabase";
-import { onMounted } from "vue";
+import { useAuth } from "../composables/useAuth";
 import { useRouter } from "vue-router";
 
+import { onMounted } from "vue";
+
 const router = useRouter();
-const isLogin = ref(false);
+const { isLogin, user, updateUserState } = useAuth();
 
 const name = ref("");
 const tel = ref("");
@@ -102,37 +104,70 @@ const handleLogout = async () => {
     router.push("/");
   }
 };
-
-//check log in status upon mounting
-onMounted(async () => {
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  console.log(user?.email);
-
-  if (user) {
-    console.log(" you are login now");
-    isLogin.value = true;
-
-    const { data: userData, error: userError } = await supabase
-      .from("user_table")
-      .select()
-      .eq("id", user.id);
-
-    if (userData && !userError) {
-      console.log("user data:", userData);
-
-      name.value = userData[0].name;
-      tel.value = userData[0].tel;
-      location.value = userData[0].location;
-      text.value = userData[0].text;
-    }
-  } else {
-    console.log("you are log out");
-    isLogin.value = false;
+const updateUserStateData = async () => {
+  if (!user.value) {
     alert("Please log in");
     router.push("/");
+    return;
+  }
+  const { data: userData, error: userError } = await supabase
+    .from("user_table")
+    .select()
+    .eq("id", user.value.id);
+
+  if (userData && !userError) {
+    name.value = userData[0].name;
+    tel.value = userData[0].tel;
+    location.value = userData[0].location;
+    text.value = userData[0].text;
+  } else {
+    alert("User profile not found. Please log in again.");
+    router.push("/");
+  }
+};
+
+onMounted(() => {
+  updateUserState(); // 로그인 상태 최신화
+});
+
+watch(isLogin, (loggedIn) => {
+  if (loggedIn) {
+    updateUserStateData(); // 로그인 상태가 되면 프로필 갱신
+  } else {
+    router.push("/"); // 로그아웃 상태면 리다이렉트
   }
 });
+
+// //check log in status upon mounting
+// onMounted(async () => {
+//   const {
+//     data: { user },
+//   } = await supabase.auth.getUser();
+
+//   console.log(user?.email);
+
+//   if (user) {
+//     console.log(" you are login now");
+//     isLogin.value = true;
+
+//     const { data: userData, error: userError } = await supabase
+//       .from("user_table")
+//       .select()
+//       .eq("id", user.id);
+
+//     if (userData && !userError) {
+//       console.log("user data:", userData);
+
+//       name.value = userData[0].name;
+//       tel.value = userData[0].tel;
+//       location.value = userData[0].location;
+//       text.value = userData[0].text;
+//     }
+//   } else {
+//     console.log("you are log out");
+//     isLogin.value = false;
+//     alert("Please log in");
+//     router.push("/");
+//   }
+// });
 </script>

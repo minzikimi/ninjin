@@ -3,6 +3,7 @@
     class="max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4"
   >
     <form
+      v-if="isLogin"
       @submit.prevent="handleSubmit"
       class="space-y-6 bg-white p-6 border border-gray-400 rounded-none w-full"
     >
@@ -116,6 +117,7 @@
 <script setup>
 import { ref } from "vue";
 
+const isLogin = ref(false);
 const title = ref("");
 const price = ref("");
 const description = ref("");
@@ -123,12 +125,44 @@ const location = ref("");
 const phone = ref("");
 const previewImage = ref("");
 
-function onFileChange(event) {
+onMounted(async () => {
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log(user?.email);
+
+  if (user) {
+    console.log(" you are login now");
+    isLogin.value = true;
+
+    const { data: userData, error: userError } = await supabase
+      .from("user_table")
+      .select()
+      .eq("id", user.id);
+
+    if (userData && !userError) {
+      console.log("user data:", userData);
+
+      name.value = userData[0].name;
+      tel.value = userData[0].tel;
+      location.value = userData[0].location;
+      text.value = userData[0].text;
+    }
+  } else {
+    console.log("you are log out");
+    isLogin.value = false;
+    alert("Please log in");
+    router.push("/");
+  }
+});
+
+const onFileChange = (event) => {
   const file = event.target.files && event.target.files[0];
   if (file) {
     previewImage.value = URL.createObjectURL(file);
   }
-}
+};
 
-function handleSubmit() {}
+const handleSubmit = () => {};
 </script>
