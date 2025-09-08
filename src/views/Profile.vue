@@ -126,48 +126,15 @@ const updateUserStateData = async () => {
   }
 };
 
-onMounted(() => {
-  updateUserState(); // 로그인 상태 최신화
+onMounted(async () => {
+  await updateUserState();
 });
 
-watch(isLogin, (loggedIn) => {
+watch(isLogin, async (loggedIn) => {
   if (loggedIn) {
-    updateUserStateData(); // 로그인 상태가 되면 프로필 갱신
+    await updateUserStateData(); // 로그인 상태가 되면 프로필 갱신
   } else {
-    router.push("/"); // 로그아웃 상태면 리다이렉트
+    router.push("/");
   }
 });
-
-// //check log in status upon mounting
-// onMounted(async () => {
-//   const {
-//     data: { user },
-//   } = await supabase.auth.getUser();
-
-//   console.log(user?.email);
-
-//   if (user) {
-//     console.log(" you are login now");
-//     isLogin.value = true;
-
-//     const { data: userData, error: userError } = await supabase
-//       .from("user_table")
-//       .select()
-//       .eq("id", user.id);
-
-//     if (userData && !userError) {
-//       console.log("user data:", userData);
-
-//       name.value = userData[0].name;
-//       tel.value = userData[0].tel;
-//       location.value = userData[0].location;
-//       text.value = userData[0].text;
-//     }
-//   } else {
-//     console.log("you are log out");
-//     isLogin.value = false;
-//     alert("Please log in");
-//     router.push("/");
-//   }
-// });
 </script>
