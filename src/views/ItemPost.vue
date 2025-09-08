@@ -1,6 +1,6 @@
 <template>
   <Spinner :visible="isLoading" text="Just a moment, we're posting..." />
-
+  <!--  -->
   <div
     class="max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4"
   >

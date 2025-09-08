@@ -1,6 +1,6 @@
 <template>
   <div
-    class="mb-3 border p-3 flex flex-col cursor-pointer transition hover:shadow-lg"
+    class="mb-3 border p-3 flex flex-row cursor-pointer transition hover:shadow-lg"
   >
     <img
       :src="item.image"
@@ -10,7 +10,7 @@
     <div class="mt-3 flex-1 flex flex-col justify-between">
       <h2 class="font-semibold text-lg">{{ item.title }}</h2>
       <p class="text-gray-500 text-sm mt-1">{{ item.location }}</p>
-      <div class="text-orange-600 font-bold mt-2">{{ item.price }}원</div>
+      <div class="text-orange-600 font-bold mt-2">{{ item.price }}SEK</div>
       <p class="text-gray-700 mt-2 line-clamp-2">{{ item.desc }}</p>
     </div>
   </div>

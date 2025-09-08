@@ -49,7 +49,7 @@ const title = ref("");
 // watch는 currentPath를 감시하도록 함
 watch(currentPath, (path) => {
   if (path === "/login") {
-    title.value = "Login";
+    title.value = "";
   } else if (path === "/signup") {
     title.value = "Sign up";
   } else if (path === "/home") {
