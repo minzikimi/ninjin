@@ -1,5 +1,8 @@
 <template>
-  <nav class="flex justify-between items-center px-4 h-16">
+  <nav
+    v-if="currentPath !== '/'"
+    class="flex justify-between items-center px-4 h-16 bg-orange-400 text-white"
+  >
     <router-link
       v-if="
         currentPath === '/signup' ||
@@ -19,9 +22,9 @@
       <router-link to="/profile">
         <Icon icon="teenyicons:user-circle-solid" width="24" height="24" />
       </router-link>
-      <router-link to="/item-post">
+      <!-- <router-link to="/item-post">
         <Icon icon="mdi:pencil-outline" width="24" height="24" />
-      </router-link>
+      </router-link> -->
     </div>
 
     <router-link
@@ -52,8 +55,6 @@ watch(currentPath, (path) => {
     title.value = "";
   } else if (path === "/signup") {
     title.value = "Sign up";
-  } else if (path === "/home") {
-    title.value = "Home";
   } else if (path === "/chat") {
     title.value = "Chat";
   } else if (path === "/community") {

@@ -1,8 +1,27 @@
 <template>
-  <div class="max-w-xl mx-auto p-4">
-    <div class="grid grid-cols-2 gap-5">
-      <ItemCard v-for="post in posts" :key="post.id" :item="post" />
-    </div>
+  <div class="mx-auto mt-5 relative min-h-[400px]">
+    <ItemCard v-for="post in posts" :key="post.id" :item="post" />
+
+    <router-link
+      to="/item-post"
+      class="fixed bottom-50 left-1/2 bg-orange-400 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-orange-500 transition"
+      aria-label="Add new item"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="w-8 h-8"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 4v16m8-8H4"
+        />
+      </svg>
+    </router-link>
   </div>
 </template>
 

@@ -15,7 +15,7 @@
           placeholder="Enter your email"
           required
           v-model="email"
-          class="w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-blue-400 text-base transition"
+          class="rounded-md w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-blue-400 text-base transition"
         />
       </div>
       <div class="mb-6">
@@ -30,12 +30,12 @@
           required
           placeholder="Enter your password"
           v-model="password"
-          class="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-blue-400 text-base transition"
+          class="rounded-md w-full px-4 py-3 border border-gray-200 focus:outline-none focus:border-blue-400 text-base transition"
         />
       </div>
       <button
         type="submit"
-        class="w-full py-3 bg-orange-400 hover:bg-orange-800 text-white font-semibold text-base shadow transition"
+        class="rounded-md w-full py-3 bg-orange-400 hover:bg-orange-800 text-white font-semibold text-base shadow transition"
       >
         Log In
       </button>

@@ -58,7 +58,7 @@
       </div>
     </details>
 
-    <details class="bg-orange-50 -md p-4">
+    <details class="rounded-md bg-orange-50 -md p-4">
       <summary class="cursor-pointer font-semibold text-gray-900">
         My Posted Items
       </summary>

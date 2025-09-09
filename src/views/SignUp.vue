@@ -1,23 +1,16 @@
 <template>
-  <Spinner
-    :visible="isLoading"
-    text="Just a moment, we're creating your account..."
-  />
   <div
-    class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-white"
+    class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-center px-6 py-10 bg-white"
   >
-    <h1 class="text-6xl font-extrabold mb-10">MoNoモノ</h1>
+    <h1 class="text-4xl font-bold mb-8 text-center">Join MoNo</h1>
 
-    <form
-      @submit.prevent="handleSignup"
-      class="w-full max-w-xl space-y-6 bg-white p-8 border border-gray-400"
-    >
+    <form @submit.prevent="handleSignup" class="space-y-6">
       <input
         type="email"
         v-model="email"
         placeholder="Enter your Hyper Island email"
         required
-        class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
       />
 
       <input
@@ -25,15 +18,15 @@
         v-model="password"
         placeholder="Enter your password"
         required
-        class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
       />
 
       <input
         type="tel"
         v-model="tel"
-        placeholder="000 0000 000 "
+        placeholder="000 0000 0000"
         required
-        class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
       />
 
       <input
@@ -41,38 +34,37 @@
         v-model="name"
         placeholder="Enter your name"
         required
-        class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
       />
+
       <input
         type="text"
         v-model="location"
         placeholder="Enter your location"
         required
-        class="w-full px-4 py-2 border border-gray-400 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
       />
 
       <textarea
         v-model="text"
         placeholder="Self introduction"
-        rows="5"
-        class="w-full px-4 py-2 border border-gray-400 resize-y focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+        rows="4"
+        class="w-full px-4 py-3 border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-orange-400"
       ></textarea>
 
       <button
         type="submit"
-        class="w-full py-4 bg-orange-400 text-white font-semibold transition hover:bg-orange-600 rounded-none"
+        class="w-full py-3 bg-orange-400 text-white font-semibold rounded-md hover:bg-orange-500 transition"
       >
         Sign Up
       </button>
 
-      <div class="text-center text-gray-700 pt-4">
+      <p class="mt-6 text-center text-gray-600">
         Already a member?
-        <router-link
-          to="/login"
-          class="text-orange-400 font-semibold hover:underline ml-1"
+        <router-link to="/login" class="text-orange-400 underline ml-1"
           >Login</router-link
         >
-      </div>
+      </p>
     </form>
   </div>
 </template>
