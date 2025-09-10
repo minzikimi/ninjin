@@ -1,10 +1,12 @@
 <script setup>
 import NavBar from "./components/NavBar.vue";
+import TabBar from "./components/TabBar.vue";
 </script>
 
 <template>
-  <div class="max-w-md mx-auto w-full min-h-screen box-border">
+  <div class="max-w-md mx-auto w-full min-h-screen box-border relative">
     <NavBar />
+    <TabBar />
     <router-view />
   </div>
 </template>

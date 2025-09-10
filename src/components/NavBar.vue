@@ -1,12 +1,16 @@
 <template>
   <nav
-    v-if="currentPath !== '/'"
+    v-if="
+      currentPath !== '/' &&
+      currentPath !== '/signup' &&
+      currentPath !== '/login'
+    "
     class="flex justify-between items-center px-4 h-16 bg-orange-400 text-white"
   >
     <router-link
       v-if="
         currentPath === '/signup' ||
-        currentPath === '/login' ||
+        // currentPath === '/login' ||
         currentPath === '/item-post' ||
         currentPath === '/item-post-update'
       "
@@ -19,9 +23,9 @@
       class="right-icons flex items-center gap-x-4"
       v-if="currentPath === '/item-listing'"
     >
-      <router-link to="/profile">
+      <!-- <router-link to="/profile">
         <Icon icon="teenyicons:user-circle-solid" width="24" height="24" />
-      </router-link>
+      </router-link> -->
       <!-- <router-link to="/item-post">
         <Icon icon="mdi:pencil-outline" width="24" height="24" />
       </router-link> -->

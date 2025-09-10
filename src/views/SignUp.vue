@@ -87,6 +87,9 @@ const location = ref("");
 const isLoading = ref(false);
 
 const handleSignup = async () => {
+  if (!email.value.endsWith("@hyperisland.se")) {
+  }
+
   isLoading.value = true;
 
   const { data, error } = await supabase.auth.signUp({
