@@ -115,6 +115,8 @@ const updateUserStateData = async () => {
     .select()
     .eq("id", user.value.id);
 
+  console.log(userData);
+
   if (userData && !userError) {
     name.value = userData[0].name;
     tel.value = userData[0].tel;

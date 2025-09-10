@@ -34,7 +34,10 @@ import { onMounted } from "vue";
 const posts = ref([]);
 
 onMounted(async () => {
-  const { data, error } = await supabase.from("item_posts").select();
+  const { data, error } = await supabase
+    .from("item_posts")
+    .select()
+    .order("created_at", { ascending: false });
   if (error) {
     alert("failed to fetch posts");
   } else {

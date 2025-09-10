@@ -88,6 +88,8 @@ const isLoading = ref(false);
 
 const handleSignup = async () => {
   if (!email.value.endsWith("@hyperisland.se")) {
+    alert("Only HI emails are allowed.");
+    return;
   }
 
   isLoading.value = true;

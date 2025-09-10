@@ -20,7 +20,7 @@ const routes = [
   { path: '/profile', component: Profile },
   { path: '/item-post', component: ItemPost },
   { path: '/item-post-update', component: ItemPostUpdate },
-  { path: '/item-detail', component: ItemDetail },
+  { path: '/item-detail/:id', component: ItemDetail },
     
 ];
 

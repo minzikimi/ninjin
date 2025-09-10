@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-xl mx-auto p-4 bg-white">
+  <div v-if="post" class="max-w-xl mx-auto p-4 bg-white">
     <h1 class="text-3xl font-extrabold mb-4 text-orange-500">
       {{ post.title }}
     </h1>
@@ -15,7 +15,7 @@
     <div class="p-4 bg-gray-50 mb-6">
       <h2 class="text-xl font-semibold text-gray-900 mb-1">{{ post.title }}</h2>
       <p class="text-sm text-gray-600 mb-3 flex items-center gap-2">
-        <span>{{ post.seller }}</span>
+        <!-- <span>{{ post.seller }}</span> -->
         <span class="text-gray-400">·</span>
         <span>{{ post.location }}</span>
       </p>
@@ -85,21 +85,21 @@
 </template>
 
 <script setup>
-import { Icon } from "@iconify/vue";
+import { useRoute } from "vue-router";
+import supabase from "../supabase";
+import { ref, onMounted } from "vue";
 
-const post = {
-  id: 1,
-  title: "macbook",
-  seller: "minji",
-  location: "slussen",
-  pay_rule: "Price",
-  price: 50000,
-  desc: "its almost new",
-  tel: "010-1234-5678",
-  author: 2,
-  image: "",
-};
+const route = useRoute();
+const id = route.params.id;
 
-const user = { id: 1 };
-const isApplied = false;
+const post = ref(null);
+
+onMounted(async () => {
+  const { data, error } = await supabase
+    .from("item_posts")
+    .select()
+    .eq("id", id)
+    .single();
+  post.value = data;
+});
 </script>
