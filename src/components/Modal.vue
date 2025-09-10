@@ -31,7 +31,7 @@ defineProps({
   show: Boolean,
   title: String,
   message: String,
-  confirmText: String, // optional: 확인 버튼 텍스트
+  confirmText: String,
 });
 
 defineEmits(["close", "confirm"]);

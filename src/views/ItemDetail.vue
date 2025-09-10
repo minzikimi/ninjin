@@ -32,13 +32,14 @@
     </div>
 
     <div
-      class="max-w-xl bottom-0 left-0 w-full flex border-t border-gray-200 bg-white z-10"
+      v-if="post && post.author !== user.id"
+      class="w-full flex border-t border-gray-200 bg-white z-10"
     >
       <a
         :href="`tel:${post.tel}`"
         class="flex-1 py-4 text-center text-orange-500 hover:bg-orange-100 transition rounded-none font-semibold"
       >
-        Ring
+        Chat
       </a>
 
       <button
@@ -58,7 +59,8 @@
 
     <!-- if writer clicks -->
     <div
-      class="max-w-xl bottom-0 left-0 w-full flex border-t border-gray-200 bg-white z-10"
+      v-if="post && post.author === user.id"
+      class="w-full flex border-t border-gray-200 bg-white z-10"
     >
       <a
         :href="`tel:${post.tel}`"
@@ -67,12 +69,14 @@
         Delete
       </a>
 
-      <button
+      <router-link
         v-if="!isApplied"
+        :to="`/item-post-update/${post.id}`"
         class="flex-1 py-4 text-center text-white bg-orange-500 border-l border-gray-200 hover:bg-orange-100 transition font-semibold"
       >
         Edit
-      </button>
+      </router-link>
+
       <button
         v-else
         disabled
@@ -89,17 +93,30 @@ import { useRoute } from "vue-router";
 import supabase from "../supabase";
 import { ref, onMounted } from "vue";
 
+import { useAuth } from "../composables/useAuth";
+
 const route = useRoute();
 const id = route.params.id;
 
 const post = ref(null);
-
+const { isLogin, user, updateUserState } = useAuth();
 onMounted(async () => {
-  const { data, error } = await supabase
-    .from("item_posts")
-    .select()
-    .eq("id", id)
-    .single();
-  post.value = data;
+  await updateUserState();
+  // console.log(isLogin.value, user.value);
+
+  if (user.value) {
+    const { data, error } = await supabase
+      .from("item_posts")
+      .select()
+      .eq("id", id)
+      .single();
+
+    post.value = data;
+
+    if (error) {
+      alert(error.message);
+      return;
+    }
+  }
 });
 </script>

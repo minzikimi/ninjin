@@ -95,7 +95,7 @@
       </div>
       <div class="flex flex-col">
         <label for="tel" class="mb-2 font-semibold text-gray-700"
-          >tel Number</label
+          >Phone number</label
         >
         <input
           id="tel"
