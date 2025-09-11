@@ -62,12 +62,13 @@
       v-if="post && post.author === user.id"
       class="w-full flex border-t border-gray-200 bg-white z-10"
     >
-      <a
+      <button
+        @click="handleDelete"
         :href="`tel:${post.tel}`"
         class="flex-1 py-4 text-center text-orange-500 hover:bg-orange-100 transition rounded-none font-semibold"
       >
         Delete
-      </a>
+      </button>
 
       <router-link
         v-if="!isApplied"
@@ -92,11 +93,13 @@
 import { useRoute } from "vue-router";
 import supabase from "../supabase";
 import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
 
 import { useAuth } from "../composables/useAuth";
 
 const route = useRoute();
 const id = route.params.id;
+const router = useRouter();
 
 const post = ref(null);
 const { isLogin, user, updateUserState } = useAuth();
@@ -119,4 +122,19 @@ onMounted(async () => {
     }
   }
 });
+
+const handleDelete = async () => {
+  const conf = confirm("Do you really want to delete it?");
+  if (!conf) return;
+  const { data, error } = await supabase
+    .from("item_posts")
+    .delete()
+    .eq("id", id);
+
+  if (error) {
+    alert("Failed to delete");
+  } else {
+    router.push("/item-listing");
+  }
+};
 </script>
