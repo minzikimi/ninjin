@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-auto mt-5 relative min-h-[400px]">
+  <div class="mt-5 relative">
     <ItemCard v-for="post in posts" :key="post.id" :item="post" />
 
     <router-link

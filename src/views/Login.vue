@@ -2,7 +2,9 @@
   <Spinner :visible="isLoading" text="just a moment..." />
   <div class="min-h-screen flex flex-col justify-center items-center bg-white">
     <form class="w-full max-w-xs" @submit.prevent="handleLogin">
-      <h1 class="text-6xl font-extrabold mb-10">Login</h1>
+      <h1 class="text-6xl font-extrabold mb-10 text-neutral-700 tracking-wide">
+        Login
+      </h1>
       <div class="mb-4">
         <label
           for="email"

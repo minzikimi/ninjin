@@ -12,7 +12,9 @@
       ></div>
     </div>
 
-    <h1 class="text-6xl font-extrabold mb-10">MoNoモノ</h1>
+    <h1 class="text-6xl font-extrabold mb-10 text-neutral-700 tracking-wide">
+      MoNoモノ
+    </h1>
 
     <router-link
       to="/signup"
@@ -22,7 +24,7 @@
     </router-link>
 
     <div class="login-button">
-      <h3>Already a member?</h3>
+      <h3 class="text-neutral-700">Already a member?</h3>
       <router-link to="/login" class="text-orange-400"> Login </router-link>
     </div>
   </div>

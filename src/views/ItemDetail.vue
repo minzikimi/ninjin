@@ -21,13 +21,13 @@
       </p>
 
       <p class="text-lg font-bold text-orange-500 mb-4">
-        {{ post.pay_rule }}: <span>{{ post.price.toLocaleString() }}SEK</span>
+        {{ post.price.toLocaleString() }}SEK
       </p>
       <textarea
         readonly
         rows="8"
         class="w-full p-3 text-gray-700 resize-none bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-400"
-        :value="post.desc"
+        :value="post.description"
       ></textarea>
     </div>
 

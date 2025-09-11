@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-center px-6 py-10 bg-white"
+    class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-center px-6 py-10 bg-white text-neutral-700"
   >
     <h1 class="text-4xl font-bold mb-8 text-center">Join MoNo</h1>
 

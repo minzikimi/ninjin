@@ -1,10 +1,10 @@
 <template>
   <router-link
     :to="`/item-detail/${item.id}`"
-    class="block rounded-md w-full mb-3 p-4 ..."
+    class="block rounded-md w-full mb-3"
   >
     <div
-      class="rounded-md w-full mb-3 p-4 flex cursor-pointer transition bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300"
+      class="rounded-md w-full p-4 flex cursor-pointer transition bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300"
     >
       <img
         :src="item.image || 'https://placehold.co/150x150?text=No+Image'"
