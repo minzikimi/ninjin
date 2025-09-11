@@ -43,6 +43,7 @@
       </a>
 
       <button
+        @click="handleSave"
         v-if="!isApplied"
         class="flex-1 py-4 text-center text-white bg-orange-500 border-l border-gray-200 hover:bg-orange-100 transition font-semibold"
       >
@@ -134,6 +135,37 @@ const handleDelete = async () => {
   if (error) {
     alert("Failed to delete");
   } else {
+    router.push("/item-listing");
+  }
+};
+
+const handleSave = async () => {
+  const { data, error } = await supabase
+    .from("user_table")
+    .select()
+    .eq("id", user.value.id)
+    .single();
+
+  if (error) {
+    alert("Error occurred");
+    return;
+  }
+
+  console.log("user data", data);
+
+  const { error: err } = await supabase.from("item_save_list").insert({
+    item_title: post.value.title,
+    seller_id: post.value.author,
+    buyer_id: user.value.id,
+    buyer_tel: data.tel,
+    post_id: post.value.id,
+    buyer_name: data.name,
+  });
+
+  if (err) {
+    alert("error");
+  } else {
+    alert("saved!");
     router.push("/item-listing");
   }
 };
