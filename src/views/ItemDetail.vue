@@ -50,8 +50,7 @@
         Save
       </button>
       <button
-        v-else
-        disabled
+        v-if="isApplied"
         class="flex-1 py-4 text-center text-gray-400 border-l border-gray-200 cursor-not-allowed"
       >
         Saved
@@ -78,14 +77,6 @@
       >
         Edit
       </router-link>
-
-      <button
-        v-else
-        disabled
-        class="flex-1 py-4 text-center text-gray-400 border-l border-gray-200 cursor-not-allowed"
-      >
-        Saved
-      </button>
     </div>
   </div>
 </template>
@@ -95,19 +86,20 @@ import { useRoute } from "vue-router";
 import supabase from "../supabase";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-
 import { useAuth } from "../composables/useAuth";
 
 const route = useRoute();
 const id = route.params.id;
 const router = useRouter();
-
+const isApplied = ref(false);
 const post = ref(null);
 const { isLogin, user, updateUserState } = useAuth();
+
 onMounted(async () => {
   await updateUserState();
   // console.log(isLogin.value, user.value);
 
+  //db에서 글가져오기
   if (user.value) {
     const { data, error } = await supabase
       .from("item_posts")
@@ -122,6 +114,8 @@ onMounted(async () => {
       return;
     }
   }
+  //저장내역 확인
+  checkSave();
 });
 
 const handleDelete = async () => {
@@ -167,6 +161,23 @@ const handleSave = async () => {
   } else {
     alert("saved!");
     router.push("/item-listing");
+  }
+};
+
+//check if logined user already saved this item or not
+const checkSave = async () => {
+  const { data, error } = await supabase
+    .from("item_save_list")
+    .select()
+    .eq("buyer_id", user.value.id)
+    .eq("post_id", id);
+
+  if (error) {
+    alert("Error");
+    return;
+  }
+  if (data.length > 0) {
+    isApplied.value = true;
   }
 };
 </script>
