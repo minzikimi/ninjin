@@ -67,7 +67,7 @@ const handleLogin = async () => {
   if (error) {
     alert(error.message);
   } else {
-    alert(" login successful");
+    // alert(" login successful");
     console.log(data);
     router.push("/item-listing");
   }

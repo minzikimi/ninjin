@@ -45,16 +45,18 @@
       </summary>
       <div class="mt-2 space-y-4 text-gray-700">
         <div
-          v-for="item in favoriteItems"
+          v-for="item in item_save_list"
           :key="item.id"
           class="flex justify-between items-center border-b border-gray-200 pb-2"
         >
-          <span class="font-medium">{{ item.title }}</span>
+          <span class="font-medium">{{ item.item_title }}</span>
           <time class="text-sm text-gray-500">{{
-            new Date(item.saved_at).toLocaleDateString()
+            new Date(item.created_at).toLocaleDateString()
           }}</time>
         </div>
-        <p class="text-gray-400">No favorite items found.</p>
+        <p v-if="item_save_list.length === 0" class="text-gray-400">
+          No favorite items found.
+        </p>
       </div>
     </details>
 
@@ -64,16 +66,19 @@
       </summary>
       <div class="mt-2 space-y-4 text-gray-700">
         <div
-          v-for="item in postedItems"
+          v-for="item in item_my_posted_list"
           :key="item.id"
           class="flex justify-between items-center border-b border-gray-200 pb-2"
         >
           <span class="font-medium">{{ item.title }}</span>
           <time class="text-sm text-gray-500">{{
-            new Date(item.posted_at).toLocaleDateString()
+            new Date(item.created_at).toLocaleDateString()
           }}</time>
         </div>
-        <p class="text-gray-400">No posted items found.</p>
+
+        <p v-if="item_my_posted_list.length === 0" class="text-gray-400">
+          You have not posted any items yet.
+        </p>
       </div>
     </details>
   </div>
@@ -94,6 +99,37 @@ const name = ref("");
 const tel = ref("");
 const text = ref("");
 const location = ref("");
+
+const item_save_list = ref([]);
+const item_my_posted_list = ref([]);
+
+const getMyPostList = async () => {
+  const { error, data } = await supabase
+    .from("item_posts")
+    .select()
+    .eq("author", user.value.id);
+
+  if (error) {
+    alert("Failed to fetch my posted items");
+  } else {
+    item_my_posted_list.value = data;
+    console.log("My posted items:", item_my_posted_list.value);
+  }
+};
+
+const getSavedlist = async () => {
+  const { data, error } = await supabase
+    .from("item_save_list")
+    .select()
+    .eq("buyer_id", user.value.id);
+
+  if (error) {
+    alert("Failed to fetch save history");
+  } else {
+    item_save_list.value = data;
+    console.log(item_save_list);
+  }
+};
 
 const handleLogout = async () => {
   const { error } = await supabase.auth.signOut();
@@ -130,6 +166,8 @@ const updateUserStateData = async () => {
 
 onMounted(async () => {
   await updateUserState();
+  await getSavedlist();
+  await getMyPostList();
 });
 
 watch(isLogin, async (loggedIn) => {

@@ -1,5 +1,26 @@
-<template><h1>chat</h1></template>
+<template>
+  <div
+    class="fixed inset-0 bg-orange-500 bg-opacity-40 flex items-center justify-center z-50"
+  >
+    <div class="bg-white w-full max-w-md rounded-2xl shadow-lg flex flex-col">
+      <!-- Header -->
+      <div class="p-4 border-b flex justify-between items-center">
+        <h2 class="font-bold text-lg">Chat</h2>
+        <button @click="$emit('close')" class="text-gray-500 hover:text-black">
+          ✕
+        </button>
+      </div>
 
-<script setup></script>
+      <!-- Body -->
+      <div class="p-4 flex-1">
+        <p>채팅 내용 아직 구현 안됨</p>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script setup lang="ts">
+const emit = defineEmits(["close"]);
+</script>
 
 <style></style>

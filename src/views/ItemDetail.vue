@@ -35,12 +35,12 @@
       v-if="post && post.author !== user.id"
       class="w-full flex border-t border-gray-200 bg-white z-10"
     >
-      <a
-        :href="`tel:${post.tel}`"
+      <button
+        @click="openChat"
         class="flex-1 py-4 text-center text-orange-500 hover:bg-orange-100 transition rounded-none font-semibold"
       >
         Chat
-      </a>
+      </button>
 
       <button
         @click="handleSave"
@@ -59,7 +59,7 @@
 
     <!-- if writer clicks -->
     <div
-      v-if="post && post.author === user.id"
+      v-if="post && post.author === user.iㅌd"
       class="w-full flex border-t border-gray-200 bg-white z-10"
     >
       <button
@@ -78,6 +78,8 @@
         Edit
       </router-link>
     </div>
+
+    <Chat v-if="showChat" @close="showChat = false" />
   </div>
 </template>
 
@@ -87,6 +89,7 @@ import supabase from "../supabase";
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "../composables/useAuth";
+import Chat from "./Chat.vue";
 
 const route = useRoute();
 const id = route.params.id;
@@ -94,10 +97,16 @@ const router = useRouter();
 const isApplied = ref(false);
 const post = ref(null);
 const { isLogin, user, updateUserState } = useAuth();
+const showChat = ref(false);
+const chatRoom = ref(null);
+
+const openChat = () => {
+  showChat.value = true;
+};
 
 onMounted(async () => {
   await updateUserState();
-  // console.log(isLogin.value, user.value);
+  console.log(isLogin.value, user.value);
 
   //db에서 글가져오기
   if (user.value) {
