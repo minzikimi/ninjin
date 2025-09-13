@@ -135,6 +135,8 @@ const tel = ref("");
 const previewImage = ref("");
 const isLoading = ref(false);
 const currentImageUrl = ref("");
+const img_url = ref("");
+let file = null;
 
 const id = route.params.id;
 
@@ -162,15 +164,44 @@ onMounted(async () => {
 });
 
 const onFileChange = (event) => {
-  const file = event.target.files && event.target.files[0];
+  file = event.target.files && event.target.files[0];
   if (file) {
     previewImage.value = URL.createObjectURL(file);
   }
 };
 
+const uploadImage = async () => {
+  const { data, error } = await supabase.storage
+    .from("images")
+    .upload(file.name, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+
+  if (error) {
+    console.log("Upload Error:", error);
+    alert("UploadError: " + error.message);
+  } else {
+    console.log("uploaded file :", data);
+    //itemposts테이블에 이미지 url를 저장하려면 storage에 저장된 이미지의 경로를 알아야됨
+    //이미지 유알엘 가져오기
+    const { data: imgData } = supabase.storage
+      .from("images")
+      .getPublicUrl(file.name);
+    console.log("file url", imgData.publicUrl);
+
+    //테이블에 저장할 image변수
+    img_url.value = imgData.publicUrl;
+  }
+};
+
 const handleSubmit = async () => {
   isLoading.value = true;
-  let imgUrl = currentImageUrl.value;
+
+  if (previewImage.value) {
+    await uploadImage();
+  }
+  // let imgUrl = currentImageUrl.value;
   const { error } = await supabase
     .from("item_posts")
     .update({
@@ -179,7 +210,7 @@ const handleSubmit = async () => {
       description: description.value,
       location: location.value,
       tel: tel.value,
-      img_url: imgUrl,
+      img_url: img_url.value,
     })
     .eq("id", id);
 

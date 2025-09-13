@@ -1,10 +1,10 @@
 <template>
   <div class="max-w-md mx-auto p-6 space-y-8" v-if="isLogin">
-    <h1 class="text-3xl font-bold mb-6 border-b pb-2">Profile</h1>
+    <!-- <h1 class="text-3xl font-bold mb-6 border-b pb-2">Profile</h1> -->
 
     <section class="flex items-center gap-4 mb-6">
       <div
-        class="w-20 h-20 bg-orange-400 rounded-full overflow-hidden flex items-center justify-center text-white-500 select-none"
+        class="w-20 h-20 bg-orange-500 rounded-full overflow-hidden flex items-center justify-center text-white-500 select-none"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -36,7 +36,7 @@
     </section>
 
     <section>
-      <button class="text-orange-400" @click="handleLogout">Logout</button>
+      <button class="text-orange-500" @click="handleLogout">Logout</button>
     </section>
 
     <details class="bg-orange-50 p-4 mb-6">
@@ -49,7 +49,12 @@
           :key="item.id"
           class="flex justify-between items-center border-b border-gray-200 pb-2"
         >
-          <span class="font-medium">{{ item.item_title }}</span>
+          <router-link
+            :to="`/item-detail/${item.post_id}`"
+            class="font-medium text-orange-600 hover:underline"
+          >
+            <span class="font-medium">{{ item.item_title }}</span>
+          </router-link>
           <time class="text-sm text-gray-500">{{
             new Date(item.created_at).toLocaleDateString()
           }}</time>
@@ -70,7 +75,12 @@
           :key="item.id"
           class="flex justify-between items-center border-b border-gray-200 pb-2"
         >
-          <span class="font-medium">{{ item.title }}</span>
+          <router-link
+            :to="`/item-detail/${item.id}`"
+            class="font-medium text-orange-600 hover:underline"
+          >
+            <span class="font-medium">{{ item.title }}</span>
+          </router-link>
           <time class="text-sm text-gray-500">{{
             new Date(item.created_at).toLocaleDateString()
           }}</time>

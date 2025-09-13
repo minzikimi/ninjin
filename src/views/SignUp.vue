@@ -10,7 +10,7 @@
         v-model="email"
         placeholder="Enter your Hyper Island email"
         required
-        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
       />
 
       <input
@@ -18,7 +18,7 @@
         v-model="password"
         placeholder="Enter your password"
         required
-        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
       />
 
       <input
@@ -26,7 +26,7 @@
         v-model="tel"
         placeholder="000 0000 0000"
         required
-        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
       />
 
       <input
@@ -34,7 +34,7 @@
         v-model="name"
         placeholder="Enter your name"
         required
-        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
       />
 
       <input
@@ -42,26 +42,26 @@
         v-model="location"
         placeholder="Enter your location"
         required
-        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+        class="w-full px-4 py-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500"
       />
 
       <textarea
         v-model="text"
         placeholder="Self introduction"
         rows="4"
-        class="w-full px-4 py-3 border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-orange-400"
+        class="w-full px-4 py-3 border rounded-md resize-y focus:outline-none focus:ring-2 focus:ring-orange-500"
       ></textarea>
 
       <button
         type="submit"
-        class="w-full py-3 bg-orange-400 text-white font-semibold rounded-md hover:bg-orange-500 transition"
+        class="w-full py-3 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-500 transition"
       >
         Sign Up
       </button>
 
       <p class="mt-6 text-center text-gray-600">
         Already a member?
-        <router-link to="/login" class="text-orange-400 underline ml-1"
+        <router-link to="/login" class="text-orange-500 underline ml-1"
           >Login</router-link
         >
       </p>

@@ -4,7 +4,7 @@
 
     <router-link
       to="/item-post"
-      class="fixed bottom-50 left-1/2 bg-orange-400 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-orange-500 transition"
+      class="fixed bottom-50 left-1/2 bg-orange-500 text-white w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:bg-orange-500 transition"
       aria-label="Add new item"
     >
       <svg

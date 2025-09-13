@@ -5,8 +5,9 @@
       currentPath !== '/signup' &&
       currentPath !== '/login'
     "
-    class="flex justify-between items-center px-4 h-16 bg-orange-400 text-white"
+    class="flex justify-between items-center px-4 h-20 bg-orange-500 text-white"
   >
+    <h1 class="text-2xl font-bold m-5">{{ title }}</h1>
     <router-link
       v-if="
         currentPath === '/signup' ||
@@ -18,7 +19,7 @@
     >
       <Icon icon="material-symbols:close" width="24" height="24" />
     </router-link>
-    <h1>{{ title }}</h1>
+
     <div
       class="right-icons flex items-center gap-x-4"
       v-if="currentPath === '/item-listing'"
@@ -32,9 +33,7 @@
     </div>
 
     <router-link
-      v-if="
-        currentPath.startsWith('/item-detail') || currentPath === '/profile'
-      "
+      v-if="currentPath.startsWith('/item-detail')"
       to="/item-listing"
     >
       <Icon icon="ic:baseline-arrow-back" width="24" height="24" />
@@ -59,10 +58,8 @@ watch(currentPath, (path) => {
     title.value = "";
   } else if (path === "/signup") {
     title.value = "Sign up";
-  } else if (path === "/chat") {
+  } else if (path === "/chat-list") {
     title.value = "Chat";
-  } else if (path === "/community") {
-    title.value = "Community";
   } else if (path === "/profile") {
     title.value = "Profile";
   } else if (path === "/item-post") {

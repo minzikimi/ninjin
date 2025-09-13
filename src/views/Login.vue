@@ -37,7 +37,7 @@
       </div>
       <button
         type="submit"
-        class="rounded-md w-full py-3 bg-orange-400 hover:bg-orange-800 text-white font-semibold text-base shadow transition"
+        class="rounded-md w-full py-3 bg-orange-500 hover:bg-orange-800 text-white font-semibold text-base shadow transition"
       >
         Log In
       </button>

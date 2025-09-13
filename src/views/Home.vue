@@ -5,7 +5,7 @@
     <!-- bg-circles -->
     <div class="m-10">
       <div
-        class="absolute w-48 h-48 bg-orange-400 rounded-full opacity-30 animate-moveCircle1"
+        class="absolute w-48 h-48 bg-orange-500 rounded-full opacity-30 animate-moveCircle1"
       ></div>
       <div
         class="absolute w-36 h-36 bg-orange-500 rounded-full opacity-20 animate-moveCircle2"
@@ -18,14 +18,14 @@
 
     <router-link
       to="/signup"
-      class="rounded-md w-full max-w-xs py-4 mb-6 bg-orange-400 hover:bg-orange-600 text-white text-xl font-semibold shadow inline-block text-center"
+      class="rounded-md w-full max-w-xs py-4 mb-6 bg-orange-500 hover:bg-orange-600 text-white text-xl font-semibold shadow inline-block text-center"
     >
       Start
     </router-link>
 
     <div class="login-button">
       <h3 class="text-neutral-700">Already a member?</h3>
-      <router-link to="/login" class="text-orange-400"> Login </router-link>
+      <router-link to="/login" class="text-orange-500"> Login </router-link>
     </div>
   </div>
 </template>

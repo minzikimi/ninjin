@@ -9,6 +9,7 @@ import ItemPost from "../views/ItemPost.vue";
 import ItemPostUpdate from "../views/ItemPostUpdate.vue";
 import Home from "../views/Home.vue";
 import ItemDetail from "../views/ItemDetail.vue";
+import ChatList from "../views/ChatList.vue";
 
 const routes = [
   { path: '/', component: Home }, 
@@ -16,6 +17,7 @@ const routes = [
   { path: '/signup', component: SignUp },
   { path: '/item-listing', component: ItemListing },
   { path: '/chat', component: Chat },
+   { path: '/chat-list', component: ChatList },
   { path: '/profile', component: Profile },
   { path: '/item-post', component: ItemPost },
   { path: '/item-post-update/:id', component: ItemPostUpdate },

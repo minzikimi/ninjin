@@ -6,7 +6,10 @@
       <!-- Header -->
       <div class="p-4 border-b flex justify-between items-center">
         <h2 class="font-bold text-lg">Chat</h2>
-        <button @click="$emit('close')" class="text-gray-500 hover:text-black">
+        <button
+          @click.prevent.stop="$emit('close')"
+          class="text-gray-500 hover:text-black cursor-pointer"
+        >
           ✕
         </button>
       </div>
@@ -19,8 +22,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-const emit = defineEmits(["close"]);
-</script>
+<script setup></script>
 
 <style></style>

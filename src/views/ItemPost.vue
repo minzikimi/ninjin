@@ -2,23 +2,27 @@
   <Spinner :visible="isLoading" text="Just a moment, we're posting..." />
   <!--  -->
   <div
-    class="max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4"
+    class="overflow-y: auto; max-w-md flex flex-col justify-start items-center bg-gray-50 p-4 overflow-auto"
   >
     <form
       v-if="isLogin"
       @submit.prevent="handleSubmit"
-      class="space-y-6 bg-white p-6 border border-gray-400 rounded-none w-full"
+      class="space-y-6 bg-white p-6 rounded-none w-full"
     >
       <label
         for="photo"
-        class="border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer bg-center bg-cover mb-2"
-        :style="previewImage ? `background-image: url('${previewImage}');` : ''"
+        class="border-2 rounded-md border-dashed cursor-pointer bg-center bg-cover mb-2 flex flex-col items-center justify-center text-neutral-300"
+        :style="
+          previewImage
+            ? `background-image: url('${previewImage}'); width: 150px; height: 150px;`
+            : 'width: 150px; height: 150px;'
+        "
       >
         <template v-if="!previewImage">
           <!-- Camera Icon -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-20 h-20"
+            class="w-12 h-12"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -32,6 +36,7 @@
           <div class="text-neutral-400 text-sm">Add a photo</div>
         </template>
       </label>
+
       <input
         @change="onFileChange"
         type="file"
@@ -51,7 +56,7 @@
           v-model="title"
           required
           placeholder="Please provide a concise title for your item"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <div class="flex flex-col">
@@ -64,7 +69,7 @@
           v-model="price"
           required
           placeholder="Price"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <div class="flex flex-col">
@@ -77,7 +82,7 @@
           required
           placeholder="Detailed item description"
           rows="4"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50 resize-y"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 resize-y"
         />
       </div>
       <div class="flex flex-col">
@@ -90,7 +95,7 @@
           v-model="location"
           required
           placeholder="City, district, or neighborhood"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <div class="flex flex-col">
@@ -103,12 +108,12 @@
           v-model="tel"
           required
           placeholder="tel number"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <button
         type="submit"
-        class="w-full py-4 bg-orange-400 text-white font-semibold hover:bg-orange-600 transition rounded-none"
+        class="w-full py-4 bg-orange-500 text-white font-semibold hover:bg-orange-600 transition rounded-none"
       >
         Post Item
       </button>
@@ -130,7 +135,7 @@ const description = ref("");
 const location = ref("");
 const tel = ref("");
 const previewImage = ref("");
-
+const img_url = ref("");
 const { isLogin, user, updateUserState } = useAuth();
 
 const isLoading = ref(false);
@@ -141,15 +146,48 @@ onMounted(async () => {
   console.log("auth 정보", isLogin.value, user.value);
 });
 
-const onFileChange = (event) => {
-  const file = event.target.files && event.target.files[0];
+let file = null;
+const onFileChange = (e) => {
+  file = e.target.files[0];
+  console.log(file);
+
   if (file) {
     previewImage.value = URL.createObjectURL(file);
+    console.log(previewImage.value);
+  }
+};
+
+const uploadImage = async () => {
+  const { data, error } = await supabase.storage
+    .from("images")
+    .upload(file.name, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+
+  if (error) {
+    console.log("Upload Error:", error);
+    alert("UploadError: " + error.message);
+  } else {
+    console.log("uploaded file :", data);
+    //itemposts테이블에 이미지 url를 저장하려면 storage에 저장된 이미지의 경로를 알아야됨
+    //이미지 유알엘 가져오기
+    const { data: imgData } = supabase.storage
+      .from("images")
+      .getPublicUrl(file.name);
+    console.log("file url", imgData.publicUrl);
+
+    //테이블에 저장할 image변수
+    img_url.value = imgData.publicUrl;
   }
 };
 
 const handleSubmit = async () => {
   isLoading.value = true;
+
+  if (previewImage.value) {
+    await uploadImage();
+  }
   const { error } = await supabase.from("item_posts").insert({
     title: title.value,
     price: price.value,
@@ -157,7 +195,7 @@ const handleSubmit = async () => {
     location: location.value,
     tel: tel.value,
     // user_id: user.value.id,
-    img_url: "https://placehold.co/64x64",
+    img_url: img_url.value,
   });
   if (error) {
     console.log(error);

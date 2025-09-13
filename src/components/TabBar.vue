@@ -28,7 +28,7 @@ import { computed } from "vue";
 
 const tabs = [
   { path: "/item-listing", label: "Explore", icon: "mdi:compass-outline" },
-  { path: "/chat", label: "Chat", icon: "mdi:chat-outline" },
+  { path: "/chat-list", label: "Chat", icon: "mdi:chat-outline" },
 
   { path: "/profile", label: "Profile", icon: "teenyicons:user-circle-solid" },
 ];

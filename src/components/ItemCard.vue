@@ -7,7 +7,7 @@
       class="rounded-md w-full p-4 flex cursor-pointer transition bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300"
     >
       <img
-        :src="item.image || 'https://placehold.co/150x150?text=No+Image'"
+        :src="item.img_url || 'https://placehold.co/150x150?text=No+Image'"
         alt="item photo"
         class="w-24 h-24 object-cover rounded-md flex-shrink-0 border border-gray-300"
       />
