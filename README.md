@@ -14,6 +14,13 @@ A student-only marketplace for Hyper Island. Buy, sell, save items, and get noti
 
 ---
 
+## Tech Stack
+- **Frontend**: Vue 3, Tailwind CSS, Pinia (state management)
+- **Backend**: Supabase (Auth, Database, Storage, Realtime)
+- and Real-time price alerts via Supabase Realtime & Pinia store
+
+---
+
 ## Improvements & Next Steps
 - Expand chat functionality for real-time communication.
 - Better UX after saving items (stay on page instead of redirect).
