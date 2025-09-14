@@ -1,4 +1,5 @@
 <template>
+  <Spinner :visible="isLoading" text="just a moment..." />
   <div
     class="w-full max-w-md mx-auto min-h-screen flex flex-col justify-center px-6 py-10 bg-white text-neutral-700"
   >

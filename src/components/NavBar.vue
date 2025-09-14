@@ -7,7 +7,17 @@
     "
     class="flex justify-between items-center px-4 h-20 bg-orange-500 text-white"
   >
+    <div class="relative mr-4">
+      <Icon icon="material-symbols:notifications" width="24" height="24" />
+      <span
+        v-if="notificationCount > 0"
+        class="absolute -top-2 -right-2 bg-green-600 text-xs rounded-full px-2 py-0.5 font-bold"
+      >
+        {{ notificationCount }}
+      </span>
+    </div>
     <h1 class="text-2xl font-bold m-5">{{ title }}</h1>
+
     <router-link
       v-if="
         currentPath === '/signup' ||
@@ -45,14 +55,33 @@
 import { Icon } from "@iconify/vue";
 import { useRoute } from "vue-router";
 import { ref, watch, computed } from "vue";
+import { useNotificationStore } from "../stores/notification";
+import { useAuth } from "../composables/useAuth";
+import { usePriceChangeSubscription } from "../composables/usePriceChangeSubscription"; // 경로 맞게 변경
 
 const route = useRoute();
-
 const currentPath = computed(() => route.path);
-
 const title = ref("");
 
-// watch는 currentPath를 감시하도록 함
+const notificationStore = useNotificationStore();
+const notificationCount = computed(
+  () => notificationStore.notifications.length
+);
+
+const { user } = useAuth();
+
+watch(
+  () => user.value,
+  (val) => {
+    if (val) {
+      usePriceChangeSubscription(val.id);
+      console.log("hi");
+    }
+  },
+  { immediate: true }
+);
+
+// 기존 watch currentPath 유지
 watch(currentPath, (path) => {
   if (path === "/login") {
     title.value = "";
@@ -75,5 +104,3 @@ watch(currentPath, (path) => {
   }
 });
 </script>
-
-<style></style>

@@ -16,7 +16,7 @@
 
       <!-- Body -->
       <div class="p-4 flex-1">
-        <p>채팅 내용 아직 구현 안됨</p>
+        <p>Coming soon!</p>
       </div>
     </div>
   </div>
