@@ -23,7 +23,6 @@ A student-only marketplace for Hyper Island. Buy, sell, save items, and get noti
 
 ## Improvements & Next Steps
 - Expand chat functionality for real-time communication.
-- Better UX after saving items (stay on page instead of redirect).
 - Profile badges/ratings for trust and verification(just like 당근).
 - Accessibility improvements (alt texts, color contrast).
 - Search & filter for items (categories, price range, keywords).
