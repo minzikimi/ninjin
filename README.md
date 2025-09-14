@@ -32,6 +32,6 @@ A student-only marketplace for Hyper Island. Buy, sell, save items, and get noti
 ## Installation
 ```bash
 git clone <repo-url>
-cd mono-marketplace
+cd mono
 npm install
 npm run dev
