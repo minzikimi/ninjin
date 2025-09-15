@@ -1,7 +1,5 @@
 <template>
-  <h1>아직 구현안함</h1>
+  <h1 class="text-orange-500 m-5 text-2xl font-bold">Coming Soon</h1>
 </template>
-
-<script setup lang="ts"></script>
 
 <style></style>

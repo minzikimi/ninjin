@@ -11,11 +11,12 @@
         alt="item photo"
         class="w-24 h-24 object-cover rounded-md flex-shrink-0 border border-gray-300"
       />
-      <div class="ml-4 flex flex-col justify-between flex-1">
+      <div class="ml-4 flex flex-col justify-between flex-1 min-w-0">
         <h2 class="font-semibold text-lg truncate">{{ item.title }}</h2>
         <h3 class="text-orange-600 font-bold text-xl mt-1">
           {{ formatPrice(item.price) }} SEK
         </h3>
+        <h3>{{ item.name }}</h3>
         <address class="text-gray-500 text-sm mt-1 truncate">
           {{ item.location }}
         </address>

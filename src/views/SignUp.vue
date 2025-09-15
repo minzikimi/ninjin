@@ -55,7 +55,7 @@
 
       <button
         type="submit"
-        class="w-full py-3 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-500 transition"
+        class="cursor-pointer w-full py-3 bg-orange-500 text-white font-semibold rounded-md hover:bg-orange-500 transition"
       >
         Sign Up
       </button>

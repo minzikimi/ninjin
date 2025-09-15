@@ -1,5 +1,5 @@
 <template>
-  <div v-if="post" class="max-w-xl mx-auto p-4 bg-white">
+  <div v-if="post" class="max-w-xl mx-auto p-4 bg-white pb-20">
     <h1 class="text-3xl font-extrabold mb-4 text-orange-500">
       {{ post.title }}
     </h1>
