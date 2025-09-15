@@ -67,6 +67,15 @@
         >
       </p>
     </form>
+
+    <Modal
+      :show="showModal"
+      title="Signup Complete!"
+      message="Your account has been created successfully. Please log in to continue."
+      confirmText="Go to Login"
+      @close="showModal = false"
+      @confirm="router.push('/login')"
+    />
   </div>
 </template>
 
@@ -75,8 +84,10 @@ import { ref } from "vue";
 import supabase from "../supabase";
 import Spinner from "../components/Spinner.vue";
 import { useRouter } from "vue-router";
+import Modal from "../components/Modal.vue";
 
 const router = useRouter();
+const showModal = ref(false);
 
 const email = ref("");
 const password = ref("");
@@ -117,7 +128,8 @@ const handleSignup = async () => {
       console.log(error);
     } else {
       isLoading.value = false;
-      router.push("/login");
+      showModal.value = true;
+      // router.push("/login");
     }
   }
 };

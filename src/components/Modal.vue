@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="show"
-    class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
+    class="fixed inset-0 flex items-center justify-center bg-orange-500 bg-opacity-50 z-50"
   >
     <div class="bg-white rounded-lg shadow-xl max-w-sm w-full p-6 relative">
       <h2 v-if="title" class="text-xl font-bold mb-4">{{ title }}</h2>
