@@ -19,6 +19,7 @@
         <address class="text-gray-500 text-sm mt-1 truncate">
           {{ item.location }}
         </address>
+
         <p class="text-gray-700 mt-2 line-clamp-2">{{ item.desc }}</p>
         <time>{{ format(new Date(item.created_at), "yyyy-MM-dd") }}</time>
       </div>

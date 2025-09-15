@@ -57,7 +57,7 @@ import { useRoute } from "vue-router";
 import { ref, watch, computed } from "vue";
 import { useNotificationStore } from "../stores/notification";
 import { useAuth } from "../composables/useAuth";
-import { usePriceChangeSubscription } from "../composables/usePriceChangeSubscription"; // 경로 맞게 변경
+import { usePriceChangeSubscription } from "../composables/usePriceChangeSubscription";
 
 const route = useRoute();
 const currentPath = computed(() => route.path);
@@ -81,7 +81,7 @@ watch(
   { immediate: true }
 );
 
-// 기존 watch currentPath 유지
+// watch는 currentPath를 감시하도록 함
 watch(currentPath, (path) => {
   if (path === "/login") {
     title.value = "";

@@ -23,6 +23,7 @@
       <p class="text-lg font-bold text-orange-500 mb-4">
         {{ post.price.toLocaleString() }}SEK
       </p>
+      <p class="text-gray-600 text-sm mb-2">Phone: {{ post.tel || "-" }}</p>
       <textarea
         readonly
         rows="8"
@@ -191,7 +192,7 @@ const handleSave = async () => {
     alert("error");
   } else {
     alert("saved!");
-    router.push("/item-listing");
+    // router.push("/item-listing");
   }
 };
 

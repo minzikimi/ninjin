@@ -1,24 +1,27 @@
 <template>
   <Spinner :visible="isLoading" text="Just a moment, we're posting..." />
-  <!--  -->
   <div
-    class="max-w-md mx-auto min-h-screen flex flex-col justify-center items-center bg-gray-50 px-4"
+    class="overflow-auto max-w-md flex flex-col justify-start items-center bg-gray-50 p-4"
   >
     <form
       v-if="isLogin"
       @submit.prevent="handleSubmit"
-      class="space-y-6 bg-white p-6 border border-gray-400 rounded-none w-full"
+      class="space-y-6 bg-white p-6 rounded-none w-full"
     >
       <label
         for="photo"
-        class="border-2 aspect-square flex items-center justify-center flex-col text-neutral-300 border-neutral-300 rounded-md border-dashed cursor-pointer bg-center bg-cover mb-2"
-        :style="previewImage ? `background-image: url('${previewImage}');` : ''"
+        class="border-2 rounded-md border-dashed cursor-pointer bg-center bg-cover mb-2 flex flex-col items-center justify-center text-neutral-300"
+        :style="
+          previewImage
+            ? `background-image: url('${previewImage}'); width: 150px; height: 150px;`
+            : 'width: 150px; height: 150px;'
+        "
       >
         <template v-if="!previewImage">
           <!-- Camera Icon -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            class="w-20 h-20"
+            class="w-12 h-12"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -40,7 +43,6 @@
         class="hidden"
       />
 
-      <!-- Title -->
       <div class="flex flex-col">
         <label for="title" class="mb-2 font-semibold text-gray-700"
           >Title</label
@@ -51,7 +53,7 @@
           v-model="title"
           required
           placeholder="Please provide a concise title for your item"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <div class="flex flex-col">
@@ -64,7 +66,7 @@
           v-model="price"
           required
           placeholder="Price"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <div class="flex flex-col">
@@ -77,7 +79,7 @@
           required
           placeholder="Detailed item description"
           rows="4"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50 resize-y"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 resize-y"
         />
       </div>
       <div class="flex flex-col">
@@ -90,25 +92,25 @@
           v-model="location"
           required
           placeholder="City, district, or neighborhood"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <div class="flex flex-col">
         <label for="tel" class="mb-2 font-semibold text-gray-700"
-          >tel Number</label
+          >Phone number</label
         >
         <input
           id="tel"
           type="tel"
           v-model="tel"
           required
-          placeholder="tel number"
-          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-400 bg-gray-50"
+          placeholder="Your phone number"
+          class="border border-gray-400 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
         />
       </div>
       <button
         type="submit"
-        class="w-full py-4 bg-orange-400 text-white font-semibold hover:bg-orange-600 transition rounded-none"
+        class="w-full py-4 bg-orange-500 text-white font-semibold hover:bg-orange-600 transition rounded-none"
       >
         Post Item
       </button>
@@ -201,6 +203,8 @@ const handleSubmit = async () => {
   if (previewImage.value) {
     await uploadImage();
   }
+
+  const updatedImgUrl = img_url.value || currentImageUrl.value || "";
   // let imgUrl = currentImageUrl.value;
   const { error } = await supabase
     .from("item_posts")
@@ -210,7 +214,7 @@ const handleSubmit = async () => {
       description: description.value,
       location: location.value,
       tel: tel.value,
-      img_url: img_url.value,
+      img_url: updatedImgUrl,
     })
     .eq("id", id);
 
