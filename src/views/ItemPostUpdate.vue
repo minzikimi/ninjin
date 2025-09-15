@@ -138,6 +138,8 @@ const previewImage = ref("");
 const isLoading = ref(false);
 const currentImageUrl = ref("");
 const img_url = ref("");
+const prev_img_url = ref("");
+
 let file = null;
 
 const id = route.params.id;
@@ -160,6 +162,7 @@ onMounted(async () => {
       location.value = data.location;
       tel.value = data.tel;
       currentImageUrl.value = data.img_url || "";
+      prev_img_url.value = data.img_url;
     }
     isLoading.value = false;
   }
@@ -172,10 +175,25 @@ const onFileChange = (event) => {
   }
 };
 
+const sanitizeFileName = (fileName) => {
+  return fileName
+    .toLowerCase()
+    .replace(/\s+/g, "-")
+    .replace(/[^a-z0-9\-\.]/g, "");
+};
+
+const generateUniqueFileName = (file) => {
+  const timestamp = Date.now();
+  const sanitized = sanitizeFileName(file.name);
+  return `${timestamp}-${sanitized}`;
+};
+
 const uploadImage = async () => {
+  const uniqueFileName = generateUniqueFileName(file);
+
   const { data, error } = await supabase.storage
     .from("images")
-    .upload(file.name, file, {
+    .upload(uniqueFileName, file, {
       cacheControl: "3600",
       upsert: false,
     });
@@ -184,15 +202,9 @@ const uploadImage = async () => {
     console.log("Upload Error:", error);
     alert("UploadError: " + error.message);
   } else {
-    console.log("uploaded file :", data);
-    //itemposts테이블에 이미지 url를 저장하려면 storage에 저장된 이미지의 경로를 알아야됨
-    //이미지 유알엘 가져오기
     const { data: imgData } = supabase.storage
       .from("images")
-      .getPublicUrl(file.name);
-    console.log("file url", imgData.publicUrl);
-
-    //테이블에 저장할 image변수
+      .getPublicUrl(uniqueFileName);
     img_url.value = imgData.publicUrl;
   }
 };
@@ -201,7 +213,14 @@ const handleSubmit = async () => {
   isLoading.value = true;
 
   if (previewImage.value) {
-    await uploadImage();
+    if (!prev_img_url.value.includes(file.name)) {
+      await uploadImage();
+      const { data, error } = await supabase.storage
+        .from("images")
+        .remove([prev_img_url.value.split("/").pop()]);
+    } else {
+      img_url.value = prev_img_url.value;
+    }
   }
 
   const updatedImgUrl = img_url.value || currentImageUrl.value || "";

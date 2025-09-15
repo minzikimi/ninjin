@@ -150,9 +150,23 @@ const handleCancelSave = async () => {
   alert("Save cancelled");
 };
 
+//delete image
+const deleteImage = async () => {
+  if (post.value.img_url) {
+    const { data, error } = await supabase.storage
+      .from("images")
+      .remove([post.value.split("/").pop()]);
+    if (error) console.log("failed to delete");
+  }
+};
+
+//detete post
 const handleDelete = async () => {
   const conf = confirm("Do you really want to delete it?");
   if (!conf) return;
+
+  await deleteImage();
+
   const { data, error } = await supabase
     .from("item_posts")
     .delete()
