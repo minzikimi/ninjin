@@ -1,8 +1,13 @@
 <template>
   <div v-if="post" class="max-w-xl mx-auto p-4 bg-white pb-20">
-    <h1 class="text-3xl font-extrabold mb-4 text-orange-500">
+    <h1 class="text-3xl font-extrabold mb-2 text-orange-500">
       {{ post.title }}
     </h1>
+    <p class="text-sm text-gray-600 mb-4">
+      <span class="font-semibold">{{ authorName }}</span>
+      <span class="text-gray-400 mx-1">·</span>
+      <span>{{ post.location }}</span>
+    </p>
 
     <figure class="mb-5 overflow-hidden">
       <img
@@ -12,73 +17,68 @@
       />
     </figure>
 
-    <div class="p-4 bg-gray-50 mb-6">
-      <h2 class="text-xl font-semibold text-gray-900 mb-1">{{ post.title }}</h2>
-      <p class="text-sm text-gray-600 mb-3 flex items-center gap-2">
-        <!-- <span>{{ post.seller }}</span> -->
-        <span class="text-gray-400">·</span>
-        <span>{{ post.location }}</span>
-      </p>
+    <div class="bg-gray-50 rounded-md overflow-hidden">
+      <!-- 글 내용 -->
+      <div class="p-4">
+        <h2 class="text-xl font-semibold text-gray-900 mb-1">
+          {{ post.title }}
+        </h2>
+        <p class="text-lg font-bold text-orange-500 mb-4">
+          {{ post.price.toLocaleString() }}SEK
+        </p>
+        <p class="text-gray-600 text-sm mb-2">Phone: {{ post.tel || "-" }}</p>
+        <textarea
+          readonly
+          rows="8"
+          class="w-full p-3 text-gray-700 resize-none bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500 rounded-md"
+          :value="post.description"
+        ></textarea>
+      </div>
 
-      <p class="text-lg font-bold text-orange-500 mb-4">
-        {{ post.price.toLocaleString() }}SEK
-      </p>
-      <p class="text-gray-600 text-sm mb-2">Phone: {{ post.tel || "-" }}</p>
-      <textarea
-        readonly
-        rows="8"
-        class="w-full p-3 text-gray-700 resize-none bg-white border border-gray-300 focus:outline-none focus:ring-2 focus:ring-orange-500"
-        :value="post.description"
-      ></textarea>
-    </div>
+      <div
+        v-if="post && post.author !== user.id"
+        class="w-full flex border-t border-gray-200 bg-white"
+      >
+        <button
+          @click="openChat"
+          class="flex-1 py-4 text-center text-orange-500 hover:bg-orange-100 transition font-semibold"
+        >
+          Chat
+        </button>
+        <button
+          v-if="!isApplied"
+          @click="handleSave"
+          class="flex-1 py-4 text-center text-white bg-orange-500 border-l border-gray-200 hover:bg-orange-100 transition font-semibold"
+        >
+          Save
+        </button>
+        <button
+          v-if="isApplied"
+          @click="handleCancelSave"
+          class="flex-1 py-4 text-center text-gray-400 border-l border-gray-200 cursor-pointer"
+        >
+          Saved
+        </button>
+      </div>
 
-    <div
-      v-if="post && post.author !== user.id"
-      class="w-full flex border-t border-gray-200 bg-white z-10"
-    >
-      <button
-        @click="openChat"
-        class="cursor-pointer flex-1 py-4 text-center text-orange-500 hover:bg-orange-100 transition rounded-none font-semibold"
+      <div
+        v-if="post && post.author === user.id"
+        class="w-full flex border-t border-gray-200 bg-white"
       >
-        Chat
-      </button>
-
-      <button
-        @click="handleSave"
-        v-if="!isApplied"
-        class="flex-1 py-4 text-center text-white bg-orange-500 border-l border-gray-200 hover:bg-orange-100 transition font-semibold"
-      >
-        Save
-      </button>
-      <button
-        v-if="isApplied"
-        @click="handleCancelSave"
-        class="flex-1 py-4 text-center text-gray-400 border-l border-gray-200 cursor-pointer"
-      >
-        Saved
-      </button>
-    </div>
-
-    <!-- if writer clicks -->
-    <div
-      v-if="post && post.author === user.id"
-      class="w-full flex border-t border-gray-200 bg-white z-10"
-    >
-      <button
-        @click="handleDelete"
-        :href="`tel:${post.tel}`"
-        class="flex-1 py-4 text-center text-orange-500 hover:bg-orange-100 transition rounded-none font-semibold"
-      >
-        Delete
-      </button>
-
-      <router-link
-        v-if="!isApplied"
-        :to="`/item-post-update/${post.id}`"
-        class="flex-1 py-4 text-center text-white bg-orange-500 border-l border-gray-200 hover:bg-orange-100 transition font-semibold"
-      >
-        Edit
-      </router-link>
+        <button
+          @click="handleDelete"
+          class="flex-1 py-4 text-center text-orange-500 hover:bg-orange-100 transition font-semibold"
+        >
+          Delete
+        </button>
+        <router-link
+          v-if="!isApplied"
+          :to="`/item-post-update/${post.id}`"
+          class="flex-1 py-4 text-center text-white bg-orange-500 border-l border-gray-200 hover:bg-orange-100 transition font-semibold"
+        >
+          Edit
+        </router-link>
+      </div>
     </div>
 
     <Chat v-show="showChat" @close="handleCloseChat" />
@@ -101,6 +101,7 @@ const post = ref(null);
 const { isLogin, user, updateUserState } = useAuth();
 const showChat = ref(false);
 const chatRoom = ref(null);
+const authorName = ref("");
 
 const openChat = () => {
   showChat.value = true;
@@ -129,6 +130,16 @@ onMounted(async () => {
     if (error) {
       alert(error.message);
       return;
+    }
+
+    const authorId = post.value.author;
+    if (authorId) {
+      const { data: authorData } = await supabase
+        .from("user_table")
+        .select("name")
+        .eq("id", authorId)
+        .single();
+      if (authorData) authorName.value = authorData.name;
     }
   }
   //저장내역 확인
