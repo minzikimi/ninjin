@@ -18,7 +18,7 @@ export const useAuth = () => {
     } else {
       isLogin.value = false;
       user.value = null;
-      router.push('/login');
+      router.push('/');
     }
   };
 
