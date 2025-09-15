@@ -6,7 +6,7 @@ A student-only marketplace for Hyper Island. Buy, sell, save items, and get noti
 
 ## Features
 - **Restricted Signup:** Only `@hyperisland.se` emails allowed (So far only managed on the front end side xD).
-- **CRUD Posts:** Create, edit, delete items.
+- **CRUD Posts:** Create, browse, edit, delete items.
 - **Save Items:** Mark favorites and track them.
 - **Real-time Price Alerts:** Get notifications when saved items’ prices change.
 - **Profiles:** Name, location, phone, and bio.
