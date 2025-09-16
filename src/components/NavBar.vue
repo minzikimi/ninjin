@@ -8,20 +8,30 @@
     class="flex justify-between items-center px-4 h-20 bg-orange-500 text-white"
   >
     <div class="relative mr-4">
-      <Icon icon="material-symbols:notifications" width="24" height="24" />
+      <Icon
+        icon="material-symbols:notifications"
+        width="24"
+        height="24"
+        @click="toggleDropdown"
+      />
+
       <span
         v-if="notificationCount > 0"
         class="absolute -top-2 -right-2 bg-green-600 text-xs rounded-full px-2 py-0.5 font-bold"
       >
         {{ notificationCount }}
       </span>
+      <NotificationDropdown
+        :show="showDropdown"
+        @close="showDropdown = false"
+      />
     </div>
-    <h1 class="text-2xl font-bold m-5">{{ title }}</h1>
+
+    <h1 class="text-2xl m-5">{{ title }}</h1>
 
     <router-link
       v-if="
         currentPath === '/signup' ||
-        // currentPath === '/login' ||
         currentPath === '/item-post' ||
         currentPath === '/item-post-update'
       "
@@ -55,20 +65,25 @@
 import { Icon } from "@iconify/vue";
 import { useRoute } from "vue-router";
 import { ref, watch, computed } from "vue";
-import { useNotificationStore } from "../stores/notification";
 import { useAuth } from "../composables/useAuth";
 import { usePriceChangeSubscription } from "../composables/usePriceChangeSubscription";
+import NotificationDropdown from "./NotificationDropdown.vue";
+import { useNotificationStore } from "../stores/notification";
 
 const route = useRoute();
 const currentPath = computed(() => route.path);
 const title = ref("");
+const showDropdown = ref(false);
+const { user } = useAuth();
+
+function toggleDropdown() {
+  showDropdown.value = !showDropdown.value;
+}
 
 const notificationStore = useNotificationStore();
 const notificationCount = computed(
   () => notificationStore.notifications.length
 );
-
-const { user } = useAuth();
 
 watch(
   () => user.value,
