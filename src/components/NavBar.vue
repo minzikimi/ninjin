@@ -27,7 +27,7 @@
       />
     </div>
 
-    <h1 class="text-2xl m-5">{{ title }}</h1>
+    <h1 class="text-2l m-5">{{ title }}</h1>
 
     <router-link
       v-if="
