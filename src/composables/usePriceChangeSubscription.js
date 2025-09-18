@@ -16,21 +16,36 @@ export const usePriceChangeSubscription = (userId) => {
         const postId = payload.new.id;
 
         if (oldPrice !== newPrice) {
+          const { data: postData, error: postError } = await supabase
+            .from("item_posts")
+            .select("title")
+            .eq("id", postId)
+            .single();
+
+          if (postError || !postData) {
+            console.error("Error fetching postData", postError);
+            return; 
+          }
+
           const { data: savedItems, error } = await supabase
             .from("item_save_list")
             .select()
             .eq("buyer_id", userId)
             .eq("post_id", postId);
 
-          if (error) console.error("Check savedItems error:", error);
+          if (error) {
+            console.error("Check savedItems error:", error);
+            return;
+          }
 
           if (savedItems && savedItems.length > 0) {
             notificationStore.addNotification({
               postId,
-              itemName: postData.title,   
+              itemName: postData.title,    
               oldPrice,
               newPrice,
-              message: ` "${postData.title}" price has changed from ${oldPrice} to ${newPrice}.`
+              message: `"${postData.title}" price has changed from ${oldPrice} to ${newPrice}.`
+            
             });
           }
         }
