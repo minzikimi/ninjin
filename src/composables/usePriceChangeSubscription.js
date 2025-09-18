@@ -27,9 +27,10 @@ export const usePriceChangeSubscription = (userId) => {
           if (savedItems && savedItems.length > 0) {
             notificationStore.addNotification({
               postId,
+              itemName: postData.title,   
               oldPrice,
               newPrice,
-              message: `Item ${postId} price has changed from ${oldPrice} to ${newPrice}.`
+              message: ` "${postData.title}" price has changed from ${oldPrice} to ${newPrice}.`
             });
           }
         }

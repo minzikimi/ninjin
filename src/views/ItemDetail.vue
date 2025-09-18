@@ -164,9 +164,10 @@ const handleCancelSave = async () => {
 //delete image
 const deleteImage = async () => {
   if (post.value.img_url) {
+    const filename = post.value.img_url.split("/").pop();
     const { data, error } = await supabase.storage
       .from("images")
-      .remove([post.value.split("/").pop()]);
+      .remove([filename]);
     if (error) console.log("failed to delete");
   }
 };
